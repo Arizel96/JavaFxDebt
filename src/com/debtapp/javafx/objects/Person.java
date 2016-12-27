@@ -5,12 +5,12 @@ package com.debtapp.javafx.objects;
  */
 public abstract class Person {
     protected String name;
-    protected long phone;
+    protected String  phone;
     protected String address;
     protected String vkId;
     protected String ip;
 
-    public Person(String name, long phone, String address, String vkId, String ip) {
+    public Person(String name, String phone, String address, String vkId, String ip) {
         this.name = name;
         this.phone = phone;
         this.address = address;
@@ -22,7 +22,7 @@ public abstract class Person {
         this.name = name;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(String  phone) {
         this.phone = phone;
     }
 
@@ -43,7 +43,7 @@ public abstract class Person {
         return name;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
