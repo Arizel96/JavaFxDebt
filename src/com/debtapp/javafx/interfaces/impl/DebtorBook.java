@@ -14,6 +14,22 @@ public class DebtorBook implements PersonBook {
     private ObservableList<Debtor> debtors = FXCollections.observableArrayList();
 
 
+    public void fillData() {
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+        debtors.add(new Debtor("NameVasya", "897987349854", "Ukraine", "VK EPTA", "IP"));
+    }
+
     @Override
     public void add(Person person) {
         debtors.add((Debtor) person);
