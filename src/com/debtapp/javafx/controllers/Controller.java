@@ -1,28 +1,57 @@
 package com.debtapp.javafx.controllers;
 
+import com.debtapp.javafx.interfaces.impl.DebtorBook;
+import com.debtapp.javafx.objects.Debtor;
+import com.debtapp.javafx.support.ModalCreator;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class Controller {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class Controller implements Initializable{
+    public static final ModalCreator modalCreator = ModalCreator.getInstance() ;
+    public static final String ERROR_PATH = "../fxml/modal_error.fxml";
+    public static final String MODAL_PATH = "../fxml/modal.fxml";
+    public static final String INFO_PATH = "../fxml/modal_info.fxml";
+
     @FXML Button btnSearch;
     @FXML Button btnAdd;
     @FXML Button btnDelete;
     @FXML Button btnUpdate;
     @FXML TextField fieldSearch;
+    @FXML TableView tableDebtorBook;
+    @FXML TableColumn<Debtor, String> columnName;
+    @FXML TableColumn<Debtor, String> columnPhone;
+    @FXML TableColumn<Debtor, String> columnAddress;
+    @FXML TableColumn<Debtor, String> columnId;
+    @FXML TableColumn<Debtor, String> columnIp;
+    @FXML Label lblCount;
 
     private Button clickedButton;
-    private static final String ERROR_PATH = "../fxml/modal_error.fxml";
-    private static final String MODAL_PATH = "../fxml/modal.fxml";
-    private static final String INFO_PATH = "../fxml/modal_info.fxml";
-    private static final String RANDOM = "";
+    private DebtorBook debtorBook = new DebtorBook();
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        columnName.setCellValueFactory(new PropertyValueFactory<Debtor, String>("name"));
+        columnPhone.setCellValueFactory(new PropertyValueFactory<Debtor, String>("phone"));
+        columnAddress.setCellValueFactory(new PropertyValueFactory<Debtor, String>("address"));
+        columnId.setCellValueFactory(new PropertyValueFactory<Debtor, String>("vkId"));
+        columnIp.setCellValueFactory(new PropertyValueFactory<Debtor, String>("ip"));
+        debtorBook.fillData();
+        tableDebtorBook.setItems(debtorBook.getDebtors());
+        debtorBook.getDebtors().addListener(new ListChangeListener<Debtor>() {
+            @Override
+            public void onChanged(Change<? extends Debtor> c) {
+                updateCountLabel();
+            }
+        });
+        updateCountLabel();
+    }
 
     public void buttonPressed(ActionEvent actionEvent) {
         clickedButton = (Button) actionEvent.getSource();
@@ -30,19 +59,19 @@ public class Controller {
         switch (clickedButton.getId()) {
             case "btnSearch" :
                 if (fieldSearch.getText().isEmpty()) {
-                    createErrorModal(actionEvent,ERROR_PATH);
+                    modalCreator.createErrorModal(actionEvent,ERROR_PATH,"Пустой поиск!");
                 } else {
                     lookFor();
                 }
                 break;
             case "btnAdd" :
-                createAddModal(actionEvent,MODAL_PATH);
+                modalCreator.createAddModal(actionEvent,MODAL_PATH);
                 break;
             case "btnDelete" :
-                createInfoModal(actionEvent,INFO_PATH);
+                modalCreator.createInfoModal(actionEvent,INFO_PATH, "Файл успешно удален!");
                 break;
             case "btnUpdate" :
-                createEditingModal(actionEvent, MODAL_PATH);
+                modalCreator.createEditingModal(actionEvent, MODAL_PATH);
                 break;
         }
     }
@@ -51,72 +80,7 @@ public class Controller {
 
     }
 
-    private void createErrorModal(ActionEvent actionEvent, String fxmlPath) {
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            stage.setTitle("Ошибка");
-            stage.setMinHeight(100);
-            stage.setMinWidth(220);
-            stage.setResizable(false);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void updateCountLabel() {
+        lblCount.setText("Количевство записей : " + debtorBook.getDebtors().size());
     }
-
-    private void createEditingModal(ActionEvent actionEvent, String fxmlPath) {
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            stage.setTitle("Редактирование Записи");
-            stage.setMinHeight(190);
-            stage.setMinWidth(350);
-            stage.setResizable(false);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createAddModal(ActionEvent actionEvent, String fxmlPath) {
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            stage.setTitle("Добавление Записи");
-            stage.setMinHeight(190);
-            stage.setMinWidth(350);
-            stage.setResizable(false);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createInfoModal(ActionEvent actionEvent, String fxmlPath) {
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            stage.setTitle("Отчет");
-            stage.setMinHeight(100);
-            stage.setMinWidth(220);
-            stage.setResizable(false);
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }
