@@ -12,6 +12,6 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </VBox.margin>
       </Label>
-      <Button fx:id="btnOk" defaultButton="true" mnemonicParsing="false" onAction="#errorClose" prefHeight="25.0" prefWidth="72.0" text="OK" />
+      <Button fx:id="btnOkeyError" cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#errorClose" prefHeight="25.0" prefWidth="72.0" text="OK" />
    </children>
 </VBox>
