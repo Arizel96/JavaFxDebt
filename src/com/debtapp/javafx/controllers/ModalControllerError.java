@@ -28,6 +28,13 @@ public class ModalControllerError implements Initializable{
     }
 
     public void errorClose(ActionEvent actionEvent) {
+        Object source = actionEvent.getSource();
+
+        // если нажата не кнопка - выходим из метода
+        if (!(source instanceof Button)) {
+            return;
+        }
+
         clickedButton = (Button) actionEvent.getSource();
         switch (clickedButton.getId()) {
             case "btnOkeyError" :

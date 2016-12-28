@@ -1,7 +1,9 @@
 package com.debtapp.javafx.support;
 
+import com.debtapp.javafx.controllers.ModalController;
 import com.debtapp.javafx.controllers.ModalControllerError;
 import com.debtapp.javafx.controllers.ModalInfoController;
+import com.debtapp.javafx.objects.Debtor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,7 +18,9 @@ import javafx.stage.Stage;
 public class ModalCreator {
     private static ModalCreator instance;
 
+
     private ModalCreator() {
+
     }
 
     public static ModalCreator getInstance() {
@@ -33,7 +37,7 @@ public class ModalCreator {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             stage.setTitle("Ошибка");
             stage.setMinHeight(100);
-            stage.setMinWidth(220);
+            stage.setMinWidth(250);
             stage.setResizable(false);
             stage.setScene(new Scene(root));
             stage.initModality(Modality.WINDOW_MODAL);
@@ -44,8 +48,9 @@ public class ModalCreator {
         }
     }
 
-    public void createEditingModal(ActionEvent actionEvent, String fxmlPath) {
+    public void createEditingModal(ActionEvent actionEvent, String fxmlPath, Debtor debtor) {
         try {
+            ModalController.initDebtor(debtor);
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             stage.setTitle("Редактирование Записи");
@@ -78,14 +83,14 @@ public class ModalCreator {
         }
     }
 
-    public void createInfoModal(ActionEvent actionEvent, String fxmlPath, String error) {
+    public void createInfoModal(ActionEvent actionEvent, String fxmlPath, String info) {
         try {
-            ModalInfoController.setInfo(error);
+            ModalInfoController.setInfo(info);
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
             stage.setTitle("Отчет");
             stage.setMinHeight(100);
-            stage.setMinWidth(220);
+            stage.setMinWidth(250);
             stage.setResizable(false);
             stage.setScene(new Scene(root));
             stage.initModality(Modality.WINDOW_MODAL);

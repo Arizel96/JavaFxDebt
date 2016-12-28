@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Arizel on 27.12.2016.
  */
-public class ModalInfoController implements Initializable {
+public class ModalInfoController implements Initializable{
     private Button clickedButton;
     private Stage stage;
     private static String info = "";
@@ -22,6 +22,12 @@ public class ModalInfoController implements Initializable {
     @FXML Label lblInfo;
 
     public void setClose(ActionEvent actionEvent) {
+        Object source = actionEvent.getSource();
+
+        // если нажата не кнопка - выходим из метода
+        if (!(source instanceof Button)) {
+            return;
+        }
 
         clickedButton = (Button)actionEvent.getSource();
         if (clickedButton.getId().equals("btnOkey")) {
@@ -30,12 +36,12 @@ public class ModalInfoController implements Initializable {
         }
     }
 
+    public static void setInfo(String info) {
+        ModalInfoController.info = info;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         lblInfo.setText(info);
-    }
-
-    public static void setInfo(String info) {
-        ModalInfoController.info = info;
     }
 }
