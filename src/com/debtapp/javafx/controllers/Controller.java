@@ -37,14 +37,6 @@ public class Controller implements Initializable{
 
     private Button clickedButton;
 
-    public static void addToDebtorBook(Debtor debtor) {
-        debtorBook.add(debtor);
-    }
-
-    public static void deleteFromDebtorBook(Debtor debtor) {
-        debtorBook.delete(debtor);
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableDebtorBook.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -111,6 +103,14 @@ public class Controller implements Initializable{
                 }
                 break;
         }
+    }
+
+    public static void addToDebtorBook(Debtor debtor) {
+        debtorBook.add(debtor);
+    }
+
+    public static void removeFromDebtorBook(Debtor debtor) {
+        debtorBook.delete(debtor);
     }
 
     private void lookFor() {

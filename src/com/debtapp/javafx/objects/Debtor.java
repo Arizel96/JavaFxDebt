@@ -8,4 +8,5 @@ public class Debtor extends Person{
     public Debtor(String name, String phone, String address, String vkId, String ip) {
         super(name, phone, address, vkId, ip);
     }
+
 }

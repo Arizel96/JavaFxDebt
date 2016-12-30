@@ -60,7 +60,7 @@ public class ModalCreator {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());
-            stage.show();
+            stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }
